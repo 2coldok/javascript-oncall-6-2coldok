@@ -37,7 +37,6 @@ class Controller {
 
       const holidayWorkers = await InputView.readHolidayWorkers();
       this.match.setHolidayWorkers(holidayWorkers);
-      workersValidator(weekWorkers, holidayWorkers);
     } catch (error) {
       OutputView.printError(error);
       return await this.boot();
