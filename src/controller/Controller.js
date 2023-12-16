@@ -58,6 +58,7 @@ class Controller {
       this.startDate += 1;
       
       return form;
+    
     });
     OutputView.printResult(k);
   }

@@ -1,20 +1,9 @@
 import Calendar from "./Calendar.js";
-/*
-- 기본적으로 순번에 따라 비상 근무일을 배정한다.(1)
-- 비상 근무자는 평일 순번, 휴일 순번에 각각 1회 편성되어야 한다.(ex.평일 순번에 같은 인원이 두번 배정 불가능)
-- 비상근무자 연속 2일 근무 불가능 
-- 순번상 특정 근무자가 연속 2일 근무하게 되는 상황에는, 다음 근무자와 순서를 바꿔 편성한다.
-- 만약에 법정공휴일인 수요일에 수아가 비상 근무를 서고 다음 날 평일 순번이 수아인 경우에는,
-다음 평일 근무자와 순서를 바꿔서 근무한다.
-- 비상 근무자 배정 시 다음 근무자와 순서를 바꿔야 하는 경우에는, 앞의 날짜부터 순서를 변경해야 한다.(최근 꺼부터 차례대로 변경 ㅇㅇ)
-*/
-//연속 2일 근무 하는지 체크
-//순서 바꾸는 기능 구 현
 
 class Match {
   weekWorkers;
   holidayWorkers;
-  calendarArray = []; // ['평일', '평일', '평일', '평일', '휴일', '주말', '주말', '평일',.....]
+  calendarArray = []; 
 
   matchArray = [];
 
@@ -22,8 +11,7 @@ class Match {
   startDate;
   lastDate;  
   
-  // 원본. ex ('5','월')
-  // calendarArray = ['평일', '평일', '평일', '평일', '휴일', '주말', '주말', '평일',.....] 로 세팅해준다.
+
   setMonthWithWeek(monthStr, weekStr) {
     const month = Number(monthStr);
     this.month = month;
@@ -41,19 +29,17 @@ class Match {
     }
   }
   
-  // 원본
   setWeekWorkers(str) {
     this.weekWorkers = str.split(',');
   }
   
-  // 원본
   setHolidayWorkers(str) {
     this.holidayWorkers = str.split(',');
   }
 
   weekIndex = 0;
   holidayIndex = 0;
-  // input : w(평일) or h(휴일)
+  
   updateIndex(str) {
     const maxIndex = this.holidayWorkers.length - 1;
     if (str === 'w' && this.weekIndex === maxIndex) return this.weekIndex = 0;
@@ -79,12 +65,11 @@ class Match {
       } 
     });
   }
-  // a b중 b중 d  
-// 중복시작, 중복끝, 그이후 
 
   rematch() {
     const copy = this.matchArray.slice();
-    const startIndexArray = this.findStartIndex();
+    const startIndexArray = this.findStartIndex().slice();
+    
     const temp = [];
     startIndexArray.forEach((element) => {
       const temp1 = copy.with(element + 1, copy[element + 2]);
@@ -97,8 +82,6 @@ class Match {
     return temp.at(-1);
   }
   
-//[ 1, 2, 3, 4, 5 ]
-//[ 2, 3, 4, 5, 'end' ]
   findStartIndex() {
     const copy = this.matchArray.slice();
     copy.shift();
@@ -112,22 +95,19 @@ class Match {
 }
 
 export default Match;
-/*
-const a = new Match();
 
-a.setMonthWithWeek('4', '토');
-a.setWeekWorkers('a,b,c,d,e,f');
-a.setHolidayWorkers('b,c,a,f,e,d');
-a.startMatch();
-const result = a.rematch();
-
-*/
 /*
-console.log(a.calendarArray)
-console.log(a.matchArray);
-const k = a.rematch();
+const match = new Match();
+match.setMonthWithWeek('4,토');
+match.setWeekWorkers("허브,쥬니,말랑,라온,헤나,우코,에단,수달,파워,히이로,마코,슬링키,모디,연어,깃짱,리오,고니,박스터,달리,조이,노아이즈,도이,도치,홍고,스캇,폴로,해시,로지,첵스,아이크,우가,푸만능,애쉬,로이스,오션");
+
+match.setHolidayWorkers("오션,로이스,애쉬,푸만능,우가,아이크,첵스,로지,해시,폴로,스캇,홍고,도치,도이,노아이즈,조이,달리,박스터,고니,리오,깃짱,연어,모디,슬링키,마코,히이로,파워,수달,에단,우코,헤나,라온,말랑,쥬니,허브");
+
+match.startMatch();
+
+const k = match.rematch();
+
 console.log(k);
 */
-
 
 
