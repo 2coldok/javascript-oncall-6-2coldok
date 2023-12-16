@@ -2,6 +2,7 @@ import Match from "../domain/Match.js";
 import InputView from "../view/InputView.js";
 import OutputView from "../view/OutputView.js";
 import Calendar from "../domain/Calendar.js";
+import { dateValidator, workersValidator } from "../util/Validator.js";
 
 class Controller {
   match;
@@ -20,6 +21,7 @@ class Controller {
   async getMonth() {
     try {
       const monthWithWeek = await InputView.readMonth();
+      dateValidator(monthWithWeek);
       const array = monthWithWeek.split(',');
       this.match.setMonthWithWeek(array[0], array[1]);
     } catch (error) {
@@ -35,6 +37,7 @@ class Controller {
 
       const holidayWorkers = await InputView.readHolidayWorkers();
       this.match.setHolidayWorkers(holidayWorkers);
+      workersValidator(weekWorkers, holidayWorkers);
     } catch (error) {
       OutputView.printError(error);
       return await this.boot();
