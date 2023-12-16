@@ -18,6 +18,7 @@ class Match {
 
   matchArray = [];
 
+  month;
   startDate;
   lastDate;  
   
@@ -25,6 +26,7 @@ class Match {
   // calendarArray = ['평일', '평일', '평일', '평일', '휴일', '주말', '주말', '평일',.....] 로 세팅해준다.
   setMonthWithWeek(monthStr, weekStr) {
     const month = Number(monthStr);
+    this.month = month;
     this.lastDate = Calendar.getLastDayOfMonth(20203, month);
     for (let i = 1; i <= this.lastDate; i++) {
       const find = new Calendar(2023, month, i);
@@ -107,10 +109,6 @@ class Match {
     })
     return startIndex;
   }
-
-
-
-
 }
 
 export default Match;

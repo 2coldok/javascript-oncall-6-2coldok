@@ -51,6 +51,13 @@ class Calendar {
 
     return '평일';
   }
+
+  checkSpecialHoliday() {
+    if (this.bringWeek() !== '토' && this.bringWeek() !== '일' && this.bringWeekdayOrHoliday() === '휴일') {
+      return true;
+    }
+    return false;
+  }
   
   // 해당 달의 마지막 일수를 구해준다(28 or 29 or 30 or 31)
   static getLastDayOfMonth(year, month) {
