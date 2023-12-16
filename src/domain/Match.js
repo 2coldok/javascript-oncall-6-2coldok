@@ -80,6 +80,36 @@ class Match {
       } 
     });
   }
+  // a b중 b중 d  
+// 중복시작, 중복끝, 그이후 
+
+  rematch() {
+    const copy = this.matchArray.slice();
+    const startIndexArray = this.findStartIndex();
+    const temp = [];
+    startIndexArray.forEach((element) => {
+      const temp1 = copy.with(element + 1, copy[element + 2]);
+      
+      const temp2 = temp1.with(element + 2, copy[element + 1]);
+      
+      temp.push(temp2);
+    });
+
+    return temp.at(-1);
+  }
+  
+//[ 1, 2, 3, 4, 5 ]
+//[ 2, 3, 4, 5, 'end' ]
+  findStartIndex() {
+    const copy = this.matchArray.slice();
+    copy.shift();
+    copy.push('end');
+    const startIndex = [];
+    this.matchArray.forEach((element, index) => {
+      if (element === copy[index]) startIndex.push(index);
+    })
+    return startIndex;
+  }
 
 
 
@@ -87,14 +117,19 @@ class Match {
 }
 
 export default Match;
-/*
-const a = new Match();
-a.setMonthWithWeek('5', '월');
-a.setWeekWorkers('평1,평2,평3,평4,평5');
-a.setHolidayWorkers('홀1,홀2,홀3,홀4,홀5');
-a.match();
 
+const a = new Match();
+
+a.setMonthWithWeek('4', '토');
+a.setWeekWorkers('a,b,c,d,e,f');
+a.setHolidayWorkers('b,c,a,f,e,d');
+a.match();
+const result = a.rematch();
+/*
+console.log(a.calendarArray)
 console.log(a.matchArray);
+const k = a.rematch();
+console.log(k);
 */
 
 
