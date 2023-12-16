@@ -20,9 +20,6 @@ class Match {
 
   startDate;
   lastDate;  
-  constructor() {
-
-  }
   
   // 원본. ex ('5','월')
   // calendarArray = ['평일', '평일', '평일', '평일', '휴일', '주말', '주말', '평일',.....] 로 세팅해준다.
@@ -69,7 +66,7 @@ class Match {
     
   }
   
-  match() {
+  startMatch() {
     this.calendarArray.forEach((status) => {
       if (status === '평일') {
         this.matchArray.push(this.weekWorkers[this.weekIndex]);
@@ -117,14 +114,16 @@ class Match {
 }
 
 export default Match;
-
+/*
 const a = new Match();
 
 a.setMonthWithWeek('4', '토');
 a.setWeekWorkers('a,b,c,d,e,f');
 a.setHolidayWorkers('b,c,a,f,e,d');
-a.match();
+a.startMatch();
 const result = a.rematch();
+
+*/
 /*
 console.log(a.calendarArray)
 console.log(a.matchArray);
